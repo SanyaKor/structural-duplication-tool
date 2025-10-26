@@ -1,4 +1,7 @@
 ﻿using Serilog;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace StructuralDuplication;
 class Program
@@ -9,22 +12,41 @@ class Program
         
         if (args.Length == 0)
         {
-            log.error("Usage: dotnet run <path_to_file_or_directory>. Exiting..");
+            log.error("Usage: dotnet run <intput path> <output path>. Exiting..");
             return;
         }
-        string path = args[0];
+        string inputpath = args[0];
+        string outputpath = args[1];
 
-        if (File.Exists(path))
+        if (!File.Exists(inputpath) &&  !Directory.Exists(inputpath))
         {
-            log.info("File found: {0}", Path.GetFullPath(path));
+            log.info("File found: ", Path.GetFullPath(inputpath));
         }
-        else if (Directory.Exists(path))
+        else if (Directory.Exists(inputpath))
         {
-            log.info($"Directory found {0}: {Path.GetFullPath(path)}");
+            log.info($"Input Directory found: {Path.GetFullPath(inputpath)}");
         }
         else
         {
-            log.error("Path not found: {0}", path);
+            log.error("Input Path not found: ", inputpath);
         }
+        
+        
+        if (File.Exists(outputpath))
+        {
+            log.info("File found: ", Path.GetFullPath(outputpath));
+        }
+        else if (Directory.Exists(outputpath))
+        {
+            log.info($"Output Directory found: {Path.GetFullPath(outputpath)}");
+        }
+        else
+        {
+            log.error("Output Path not found: ", outputpath);
+        }
+        
+        ParamsDuplicator duplicator = new ParamsDuplicator(inputpath, outputpath);
+        duplicator.Run();
+        
     }
 }
