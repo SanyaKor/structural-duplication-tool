@@ -1,7 +1,4 @@
-﻿using Serilog;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using System.Diagnostics;
 
 namespace StructuralDuplication;
 class Program
@@ -47,6 +44,7 @@ class Program
         
         ParamsDuplicator duplicator = new ParamsDuplicator(inputpath, outputpath);
         duplicator.Run();
+        
         
     }
 }
