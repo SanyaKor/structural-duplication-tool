@@ -1,0 +1,220 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+
+## Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+out/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]uild/
+[Bb]uild[Ll]og.*
+
+## Visual Studio files
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Rider specific
+.idea/
+*.sln.iml
+
+## Visual Studio Code
+.history/
+.vscode/*
+
+## NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+**/packages/*
+!**/packages/build/
+!**/packages/repositories.config
+.nuget/
+*.ncrunchsolution
+*.ncrunchproject
+
+## DotNet CLI
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.dotCover
+*.dotSettings.user
+*.dotSettings
+*.DotSettings
+*.DotCover
+*.DotMemory
+*.DotTrace
+*.DotPeek
+*.DotCoverData
+*.DotTraceData
+*.DotMemoryData
+*.DotPeekData
+*.testsettings
+
+## Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+TestResult.xml
+TestResults/
+*.coverage
+*.coveragexml
+*.result.xml
+*.trx
+
+## Code coverage
+*.coverage
+*.coveragexml
+coverage*.xml
+*.opencover.xml
+coverage/
+*.lcov
+*.cobertura.xml
+
+## Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+## NCrunch
+_NCrunch_*
+.*crunch*.local.xml
+
+## TFS
+$tf/
+*.vssscc
+*.vspscc
+*_i.c
+*_p.c
+*.dbmdl
+
+## Rider
+.idea/
+*.sln.iml
+
+## User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Backup & crash files
+*.bak
+*.orig
+*.tmp
+*.temp
+*.swp
+*.swo
+*.old
+
+## Cache
+.cache/
+*.cache/
+*.dll.mdb
+*.pdb
+*.mdb
+
+## Runtime files
+*.db
+*.mdf
+*.ldf
+*.sqlite
+*.sqlite3
+
+## OS generated files
+[Tt]humbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+## Package managers
+node_modules/
+bower_components/
+
+## Configuration transforms
+*.config.transform
+*.config.merge
+
+## Publish
+publish/
+app.publish/
+wwwroot/
+dist/
+*.Publish.xml
+*.pubxml
+*.pubxml.user
+*.deploy.cmd
+*.deploy-readme.txt
+*.zip
+
+## Logs
+*.log
+*.tlog
+*.err
+*.wrn
+
+## Docker
+docker-compose.override.yml
+docker-compose.vs.debug.yml
+docker-compose.vs.release.yml
+Dockerfile.development
+Dockerfile.local
+
+## Entity Framework
+Migrations/
+
+## Coverage reports
+coverage/
+coverage-report/
+.coverage/
+coverage.json
+coverage.info
+
+## ASP.NET Core
+wwwroot/
+appsettings.*.json
+Properties/launchSettings.json
+
+## JetBrains Rider + Unity
+.idea/
+*.sln.iml
+*.unityproj
+*.booproj
+*.pidb
+*.userprefs
+
+## Misc
+*.docstates
+*.vsmdi
+*.vssscc
+*.vsp
+*.vspx
+*.vspscc
+*.vshost.*
+
+## Symbols
+*.pdb
+
+## Lock files
+*.lock.json
+*.lock
+
+## Temporary test data
+temp/
+tmp/
