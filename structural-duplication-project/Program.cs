@@ -42,11 +42,12 @@ class Program
             log.error("Output Path not found: ", outputpath);
         }
         
-        //ParamsDuplicator duplicator = new ParamsDuplicator(inputpath, outputpath);
-        //duplicator.Run();
-        TestsGen tg = new TestsGen(outputpath);
-        tg.GenerateClass("test_generator","test_generator");
+        /*TestsGen tg = new TestsGen(inputpath);
+        tg.GenerateClass("test_gen_class_normal","test_gen_class_normal", TestsGen.ClassKind.Normal);
+        */
         
-        
+        ParamsDuplicator duplicator = new ParamsDuplicator(inputpath, outputpath);
+        duplicator.Run();
     }
+    
 }

@@ -16,7 +16,7 @@ public class TestsGen
         this.outputpath = outputpath;
     }
     
-    public void GenerateClass(string filename, string className)
+    public void GenerateClass(string filename, string className,  ClassKind kind)
     {
         filename = $"{className}.cs";
         
@@ -33,11 +33,13 @@ public class TestsGen
         List<string> modifiers = new() { "ref", "out", "in" };
         List<string> containers = new() { "List", "Dictionary" };
         
-        var nullableReturnTypes = returnTypes
-            .Select(t => t + "?")
+        var arrayTypes = returnTypes
+            .Select(t => t + "[]")
             .ToList();
         
-        returnTypes.AddRange(nullableReturnTypes);
+        returnTypes.AddRange(arrayTypes);
+
+        
         
         List<string> paramsList = new List<string>();
         
@@ -66,23 +68,60 @@ public class TestsGen
             }
         }
         
+        
+        var nullableReturnTypes = paramsList
+            .Select(t => t + "?")
+            .ToList();
+        
+        paramsList.AddRange(nullableReturnTypes);
+
+        
+        
         List<MethodDeclarationSyntax> methods = new List<MethodDeclarationSyntax>();
         
-        int methodCount = 1;
+        int methodCount = 0;
         
         foreach (var param in paramsList)
         {
-            MethodDeclarationSyntax newMethod = CreateMethod("test_" + methodCount.ToString(), "void",
+            MethodDeclarationSyntax methodSingleParam = CreateMethod(
+                "test_" + methodCount.ToString(), "void",
                 (param, "param1"));
             
             methodCount++;
-            methods.Add(newMethod);
+            methods.Add(methodSingleParam);
+            
+            MethodDeclarationSyntax methodMultipleParam = CreateMethod(
+                "test_" + methodCount.ToString(), "void",
+                (param, "param1"),
+                (param, "param2"));
+            
+            methodCount++;
+            methods.Add(methodMultipleParam);
         }
         
         var cls = ClassDeclaration(className)
             .AddModifiers(Token(SyntaxKind.PublicKeyword))
             .AddMembers([..methods]) ;
         
+        switch (kind)
+        {
+            case ClassKind.Abstract:
+                cls = cls.AddModifiers(Token(SyntaxKind.AbstractKeyword));
+                break;
+
+            case ClassKind.Sealed:
+                cls = cls.AddModifiers(Token(SyntaxKind.SealedKeyword));
+                break;
+
+            case ClassKind.Static:
+                cls = cls.AddModifiers(Token(SyntaxKind.StaticKeyword));
+                break;
+
+            case ClassKind.Partial:
+                cls = cls.AddModifiers(Token(SyntaxKind.PartialKeyword));
+                break;
+        }
+
         
         var root = CompilationUnit().AddMembers(cls).NormalizeWhitespace();
         
@@ -106,6 +145,15 @@ public class TestsGen
             .WithBody(Block());
 
         return method;
+    }
+    
+    public enum ClassKind
+    {
+        Normal,
+        Abstract,
+        Sealed,
+        Static,
+        Partial,
     }
     
 }
