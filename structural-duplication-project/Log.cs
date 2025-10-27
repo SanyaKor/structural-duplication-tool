@@ -21,7 +21,7 @@ public static class log
             Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(filePath))!);
             _file = TextWriter.Synchronized(new StreamWriter(filePath, append: true) { AutoFlush = true });
         }
-        info("logger initialized (min={0}{1})",
+        info("[Logger] logger initialized (min={0}{1})",
             minimum,
             filePath is null ? "" : $", file='{Path.GetFullPath(filePath)}'");
         AppDomain.CurrentDomain.ProcessExit += (_, __) => _file?.Dispose();
