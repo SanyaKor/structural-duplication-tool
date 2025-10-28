@@ -10,12 +10,16 @@ public class ParamsDuplicator
 {
     private string _inputpath;
     private string _outputath;
+    private string _suffix;
+    private string _comment;
+    private string _filter;
+    
     private int _duplications;
     private int _filesprocessed;
     private int _methodsprocessed;
     private int _methodsskipped;
-    
-    public ParamsDuplicator(string inputpath, string outputath)
+
+    public ParamsDuplicator(string inputpath, string outputath, string suffix, string  comment, string filter)
     {
         if (!Directory.Exists(inputpath))
         {
@@ -35,6 +39,9 @@ public class ParamsDuplicator
         
         this._inputpath = inputpath;
         this._outputath = outputath;
+        this._comment = comment;
+        this._suffix = suffix;
+        this._filter = filter;
         
         this._duplications = 0;
         this._filesprocessed = 0;
@@ -46,7 +53,7 @@ public class ParamsDuplicator
     public void Run(bool duplicateAllParams = false )
     {
         log.info($"[ParamsDuplicator] Running in directory: {this._inputpath}");
-        var files = Directory.EnumerateFiles(this._inputpath, "*.cs", SearchOption.AllDirectories);
+        var files = Directory.EnumerateFiles(this._inputpath, this._filter, SearchOption.AllDirectories);
         foreach (var file in files)
         {
             string code, updatedRoot;
@@ -90,7 +97,7 @@ public class ParamsDuplicator
     {
         log.info($"[ParamsDuplicator] Running in directory: {this._inputpath}");
 
-        var files = Directory.EnumerateFiles(this._inputpath, "*.cs", SearchOption.AllDirectories);
+        var files = Directory.EnumerateFiles(this._inputpath, this._filter, SearchOption.AllDirectories);
 
         await Parallel.ForEachAsync(files, async (filePath, _) =>
         {
@@ -170,13 +177,13 @@ public class ParamsDuplicator
             
             foreach (var parameter in currentMethod.ParameterList.Parameters)
             {
-                var duplicatedParam = parameter.WithIdentifier(Identifier(parameter.Identifier.ValueText + "_duplicate"));
+                var duplicatedParam = parameter.WithIdentifier(Identifier(parameter.Identifier.ValueText + this._suffix));
                 updatedMethod = updatedMethod.AddParameterListParameters(duplicatedParam);
                 paramsDublicated++;
             }
             
             updatedMethod = updatedMethod.WithLeadingTrivia(
-                TriviaList(Comment("\n\t// duplicated parameter added"), ElasticCarriageReturnLineFeed));
+                TriviaList(Comment($"\n\t{this._comment}"), ElasticCarriageReturnLineFeed));
             
             root = root.ReplaceNode(currentMethod, updatedMethod);
             log.debug($"[ParamsDuplicator] Successfully duplicated params in method: {m.Identifier.Text}");

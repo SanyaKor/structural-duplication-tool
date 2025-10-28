@@ -14,17 +14,19 @@ class Program
         string inputpath = flags.GetValueOrDefault("--input", $"{projectRoot}" + "/testing/Samples");
         string outputpath = flags.GetValueOrDefault("--output", $"{projectRoot}" + "/testing/Results");
         
-        bool all = flags.ContainsKey("--all");
+        string suffix = flags.GetValueOrDefault("--suffix", "_duplicate");
+        string comment = flags.GetValueOrDefault("--comment", "// duplicated parameter added");
+        string filter = flags.GetValueOrDefault("--filter", "*.cs");
+        
+        bool all = flags.ContainsKey("--duplicate-all");
     
         
-        
-        /*
         TestsGen tg = new TestsGen(inputpath);
         tg.GenerateClass("test_gen_class_normal","test_gen_class_normal", TestsGen.ClassKind.Normal);
-        */
         
-        ParamsDuplicator duplicator = new ParamsDuplicator(inputpath, outputpath);
-        duplicator.Run(true);
+        
+        ParamsDuplicator duplicator = new ParamsDuplicator(inputpath, outputpath, suffix, comment, filter);
+        duplicator.Run(all);
     }
     
     static Dictionary<string, string> ParseArgs(string[] args)
