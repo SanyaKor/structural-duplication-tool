@@ -74,12 +74,14 @@ public class TestsGen
             .ToList();
         
         paramsList.AddRange(nullableReturnTypes);
-
-        
         
         List<MethodDeclarationSyntax> methods = new List<MethodDeclarationSyntax>();
         
-        int methodCount = 0;
+        MethodDeclarationSyntax methodNoParam = CreateMethod("test_0", "void");
+
+        methods.Add(methodNoParam);
+        
+        int methodCount = 1;
         
         foreach (var param in paramsList)
         {
@@ -98,6 +100,9 @@ public class TestsGen
             methodCount++;
             methods.Add(methodMultipleParam);
         }
+        
+        
+        
         
         var cls = ClassDeclaration(className)
             .AddModifiers(Token(SyntaxKind.PublicKeyword))
@@ -132,11 +137,16 @@ public class TestsGen
     private MethodDeclarationSyntax CreateMethod(string name, string returnType = "void", params (string Type, string Name)[] parameters)
     {
         var parameterList = new SeparatedSyntaxList<ParameterSyntax>();
+        
         foreach (var (type, paramName) in parameters)
         {
-            parameterList = parameterList.Add(Parameter(Identifier(paramName))
-                    .WithType(ParseTypeName(type))
-            );
+            if (!string.IsNullOrWhiteSpace(type) && !string.IsNullOrWhiteSpace(paramName))
+            {
+                parameterList = parameterList.Add(
+                    Parameter(Identifier(paramName))
+                        .WithType(ParseTypeName(type))
+                );
+            }
         }
 
         var method = MethodDeclaration(ParseTypeName(returnType), Identifier(name))

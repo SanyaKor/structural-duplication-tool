@@ -7,20 +7,44 @@ class Program
     {   
         log.setup(minimum: LogLevel.Info);
         
-        if (args.Length == 0)
-        {
-            log.error("[CLI] Usage: dotnet run <intput path> <output path>. Exiting..");
-            return;
-        }
-        string inputpath = args[0];
-        string outputpath = args[1];
+        Dictionary<string, string> flags = ParseArgs(args);
         
-        /*TestsGen tg = new TestsGen(inputpath);
+        string projectRoot = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"../../../.."));
+        
+        string inputpath = flags.GetValueOrDefault("--input", $"{projectRoot}" + "/testing/Samples");
+        string outputpath = flags.GetValueOrDefault("--output", $"{projectRoot}" + "/testing/Results");
+        
+        bool all = flags.ContainsKey("--all");
+    
+        
+        
+        /*
+        TestsGen tg = new TestsGen(inputpath);
         tg.GenerateClass("test_gen_class_normal","test_gen_class_normal", TestsGen.ClassKind.Normal);
         */
         
         ParamsDuplicator duplicator = new ParamsDuplicator(inputpath, outputpath);
-        duplicator.Run();
+        duplicator.Run(true);
+    }
+    
+    static Dictionary<string, string> ParseArgs(string[] args)
+    {
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        
+        for (int i = 0; i < args.Length; i++)
+        {
+            string arg = args[i];
+            
+            if (arg.StartsWith("--"))
+            {
+                string value = (i + 1 < args.Length && !args[i + 1].StartsWith("--"))
+                    ? args[i + 1]
+                    : "true";
+                
+                dict[arg] = value;
+            }
+        }
+        return dict;
     }
     
 }
