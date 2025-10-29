@@ -39,26 +39,28 @@ dotnet run --project structural-duplication-tool
 Basic example:
 
 ```bash
-dotnet run -- \
-  --input ./src \
-  --output ./out \
-  --duplicate-all \
-  --suffix _dup \
-  --comment \
+dotnet run -- \\
+  --input ./src \\
+  --output ./out \\
+  --duplicate-all \\
+  --suffix "_dup" \\
   --filter *Service.cs
 ```
 
-### Options
+---
 
-| Flag | Description | Example |
-|------|--------------|----------|
-| `--input` | Path to source directory | `--input ./src` |
-| `--output` | Output directory | `--output ./out` |
-| `--duplicate-all` | Duplicate all parameters instead of only the first | `--duplicate-all` |
-| `--suffix` | Suffix to append to duplicated parameters | `--suffix _copy` |
-| `--comment` | Add comment after modified signatures | `--comment` |
-| `--filter` | File name pattern filter | `--filter *Service.cs` |
-| `--summary` | Show summary of modified methods and parameters | `--summary` |
+### ⚙️ CLI Flags and Defaults
+
+| Flag | Description | Default | Example |
+|------|--------------|----------|----------|
+| `--input` | Path to source directory | `${projectRoot}/testing/Samples/` | `--input ./src` |
+| `--output` | Output directory for modified files | `${projectRoot}/testing/Results/` | `--output ./out` |
+| `--duplicate-all` | Duplicate all parameters (if omitted — duplicates only methods with one parameter) | `false` | `--duplicate-all` |
+| `--suffix` | Suffix appended to duplicated parameters | `_duplicate` | `--suffix "_copy"` |
+| `--comment` | Inline comment added after modified methods
+ | // duplicated parameter added
+ | `--comment "// dup"` |
+| `--filter` | File name pattern to include | `*.cs` | `--filter *Service.cs` |
 
 ---
 
@@ -83,11 +85,11 @@ public class UserService
 
 ### After running:
 ```bash
-dotnet run -- \
-  --input ./src \
-  --output ./out \
-  --duplicate-all \
-  --suffix _dup \
+dotnet run -- \\
+  --input ./src \\
+  --output ./out \\
+  --duplicate-all \\
+  --suffix "_dup" \\
   --comment
 ```
 
@@ -117,20 +119,4 @@ Console output:
 [ParamsDuplicator] Parameters duplicated: 2
 [ParamsDuplicator] Saved to: ./out
 ```
-
 ---
-
-## 📊 Example summary output
-
-```
-[ParamsDuplicator] Files processed: 12
-[ParamsDuplicator] Methods modified: 45
-[ParamsDuplicator] Parameters duplicated: 97
-[ParamsDuplicator] Saved to: ./out
-```
-
----
-
-## 🧾 License
-
-MIT License © 2025 Your Name
