@@ -57,7 +57,7 @@ dotnet run -- \\
 | `--output` | Output directory for modified files | `${projectRoot}/testing/Results/` | `--output ./out` |
 | `--duplicate-all` | Duplicate all parameters (if omitted — duplicates only methods with one parameter) | `false` | `--duplicate-all` |
 | `--suffix` | Suffix appended to duplicated parameters | `_duplicate` | `--suffix "_copy"` |
-| `--comment` | Inline comment added after modified methods | "// duplicated parameter added" | `--comment "// dup"` |
+| `--comment` | Inline comment added after modified methods | // duplicated parameter added | `--comment "// dup"` |
 | `--filter` | File name pattern to include | `*.cs` | `--filter *Service.cs` |
 
 ---
