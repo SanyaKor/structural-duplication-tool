@@ -88,7 +88,6 @@ dotnet run -- \\
   --output ./out \\
   --duplicate-all \\
   --suffix "_dup" \\
-  --comment
 ```
 
 ### Output file (`UserService.cs`)
